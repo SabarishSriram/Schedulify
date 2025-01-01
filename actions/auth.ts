@@ -1,6 +1,9 @@
-import { signIn } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
+import { redirect } from "next/navigation";
+import { useState } from "react";
+export const logIn = async (provider: string) => {
+  console.log(provider);
+  
 
-export const signin = async (provider:string) => {
-  const res = await signIn(provider, { callbackUrl: "/" });
-  console.log(res);
-}
+  // await signOut();
+};

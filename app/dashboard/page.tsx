@@ -1,17 +1,19 @@
-import { auth } from "@/lib/auth";
+"use client";
+import { requireUser } from "@/lib/hooks";
+import { signOut } from "next-auth/react";
 import { redirect } from "next/navigation";
-import React from "react";
 
-async function page() {
-  const session = await auth();
-  console.log(session);
-  if (!session?.user) {
-    return redirect("/");
-  }
-
+function page() {
+  const signout = async () => {
+    const session = await requireUser();
+    await signOut();
+  };
   return (
-    <div>
-      <h1>Dashboard</h1>
+    <div className="">
+      Welcomet o dashboard
+      <button className="text-black" onClick={() => signout()}>
+        Signout
+      </button>
     </div>
   );
 }
