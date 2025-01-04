@@ -1,19 +1,19 @@
-"use client";
+"use server";
+import { Dock, DockIcon } from "@/components/ui/dock";
 import { requireUser } from "@/lib/hooks";
-import { signOut } from "next-auth/react";
-import { redirect } from "next/navigation";
 
-function page() {
-  const signout = async () => {
-    const session = await requireUser();
-    await signOut();
-  };
+async function page() {
+  const session = await requireUser();
+  console.log(session);
+
   return (
     <div className="">
-      Welcomet o dashboard
-      <button className="text-black" onClick={() => signout()}>
-        Signout
-      </button>
+      Welcome to dashboard
+      <form action="">
+        <button className="primary" type="submit">
+          Signout
+        </button>
+      </form>
     </div>
   );
 }
