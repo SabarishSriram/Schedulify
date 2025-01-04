@@ -5,11 +5,6 @@ import { Button } from "@/components/ui/button";
 import {
   Menu,
   X,
-  Home,
-  Settings,
-  Users,
-  HelpCircle,
-  LogOut,
 } from "lucide-react";
 import { DashboardLinks } from "./DashboardLinks";
 import Link from "next/link";

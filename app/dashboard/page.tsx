@@ -1,5 +1,4 @@
 "use server";
-import { Dock, DockIcon } from "@/components/ui/dock";
 import { requireUser } from "@/lib/hooks";
 
 async function page() {

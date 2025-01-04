@@ -3,7 +3,6 @@ import Link from "next/link";
 import React, { ReactNode } from "react";
 import logo from "../../public/logo.png";
 import { Togglebutton } from "@/components/Togglebutton";
-import { Icon, PiIcon } from "lucide-react";
 import { DashboardLinks } from "@/components/DashboardLinks";
 import { ThemeProvider } from "@/components/theme-provider";
 import { MobileSidebarMenu } from "@/components/DropDownTrigger";

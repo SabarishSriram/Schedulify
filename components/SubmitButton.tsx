@@ -6,7 +6,7 @@ import google from "../public/google.svg";
 import github from "../public/github.svg";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
-import { signIn, signOut } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 function SubmitButton() {
   const [googlePending, setGooglePending] = useState(false);
