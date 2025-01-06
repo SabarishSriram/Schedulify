@@ -9,9 +9,6 @@ async function page() {
     <div className="">
       Welcome to dashboard
       <form action="">
-        <button className="primary" type="submit">
-          Signout
-        </button>
       </form>
     </div>
   );

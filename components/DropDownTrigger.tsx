@@ -2,10 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Menu,
-  X,
-} from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { DashboardLinks } from "./DashboardLinks";
 import Link from "next/link";
 import Image from "next/image";
@@ -32,7 +29,7 @@ export function MobileSidebarMenu() {
       <Button
         variant="outline"
         size="icon"
-        className="dark:hover:bg-gray-900 block md:hidden"
+        className="dark:hover:bg-gray-900 md:hidden"
         onClick={() => setIsOpen(true)}
       >
         <Menu className="h-4 w-4" />
@@ -40,12 +37,7 @@ export function MobileSidebarMenu() {
       </Button>
 
       {/* Overlay */}
-      {isOpen && (
-        <div
-          className=""
-          onClick={() => setIsOpen(false)}
-        />
-      )}
+      {isOpen && <div className="" onClick={() => setIsOpen(false)} />}
 
       {/* Sidebar */}
       <div
@@ -63,17 +55,17 @@ export function MobileSidebarMenu() {
           <span className="sr-only">Close sidebar menu</span>
         </Button>
 
-        <div className="flex flex-col w-full py-5">
-          <div className="hidden md:block rounded-br-3xl mt-1 ">
+        <div className="flex flex-col w-full py-3">
+          <div className=" md:block rounded-br-3xl mt-1 ">
             <div className="flex justify-center border-b items-center h-20">
               <Link className="flex items-center space-x-2" href="/">
                 <Image
                   src={logo}
                   alt="logo"
-                  className="size-6 sm:size-8 md:size-9"
+                  className="size-9 sm:size-8 md:size-9"
                 />
-                <span className="font-semibold text-lg sm:text-xl md:text-2xl">
-                  <span className="font-semibold text-primary text-lg sm:text-xl md:text-2xl">
+                <span className="font-semibold text-2xl ">
+                  <span className="font-semibold text-primary text-2xl ">
                     Sched
                   </span>
                   ulify
