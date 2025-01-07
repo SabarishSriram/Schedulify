@@ -21,7 +21,7 @@ function AuthDialog() {
       <DialogContent className="max-w-sm">
         <DialogTitle className="flex items-center py-3 space-x-2 justify-center">
           <Image src={logo} alt="logo" className="size-9" />
-          <span className="font-semibold text-xl sm:text-xl md:text-2xl text-black">
+          <span className="font-semibold text-xl sm:text-xl md:text-2xl ">
             <span
               className="font-semi
           bold text-primary text-lg sm:text-xl md:text-2xl"

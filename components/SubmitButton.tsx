@@ -29,8 +29,8 @@ function SubmitButton() {
   return (
     <div className="space-y-3">
       {googlePending ? (
-        <Button variant="outline" className="text-base w-full">
-          <Loader2 strokeWidth={3} className="text-primary animate-spin " />
+        <Button variant="outline" className="text-base w-full cursor-not-allowed">
+          <Loader2 strokeWidth={3} className="text-primary animate-spin  " />
         </Button>
       ) : (
         <Button
@@ -44,7 +44,7 @@ function SubmitButton() {
       )}
 
       {githubPending ? (
-        <Button variant="outline" className="text-base w-full">
+        <Button variant="outline" className="text-base w-full cursor-not-allowed ">
           <Loader2
             strokeWidth={3}
             className="size-7 animate-spin text-primary "

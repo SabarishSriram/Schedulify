@@ -7,7 +7,7 @@ import { Togglebutton } from "./Togglebutton";
 
 function Navbar() {
   return (
-    <div className="max-w-8xl mx-auto flex py-5 px-4 sm:px-6 lg:px-8 justify-between items-center  text-white">
+    <div className="max-w-8xl mx-auto flex py-5 px-4 sm:px-6 lg:px-8 justify-between items-center">
       <div>
         <Link className="flex items-center space-x-2" href="/">
           <Image
@@ -15,7 +15,7 @@ function Navbar() {
             alt="logo"
             className="size-6 sm:size-8 md:size-10"
           />
-          <span className="font-semibold text-lg sm:text-xl md:text-2xl text-black">
+          <span className="font-semibold text-lg sm:text-xl md:text-2xl">
             <span
               className="font-semi
           bold text-primary text-lg sm:text-xl md:text-2xl"
