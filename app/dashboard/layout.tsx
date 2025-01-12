@@ -6,10 +6,22 @@ import { Togglebutton } from "@/components/Togglebutton";
 import { DashboardLinks } from "@/components/DashboardLinks";
 import { ThemeProvider } from "@/components/theme-provider";
 import { MobileSidebarMenu } from "@/components/DropDownTrigger";
-import Navbar from "@/components/Navbar";
-import { auth } from "@/lib/auth";
 import ProfileIcon from "@/components/ProfileIcon";
+import { requireUser } from "@/lib/hooks";
+import prisma from "@/lib/db";
+import { redirect } from "next/navigation";
 async function layout({ children }: { children: ReactNode }) {
+  const session = await requireUser()
+
+  const onboarding= await prisma.user.findUnique({
+    where: { id: session.user?.id },
+    select: { userName: true },
+  })
+  if(onboarding?.userName === null){
+    return redirect("/onboarding")
+  }
+
+
   return (
     <>
       <ThemeProvider

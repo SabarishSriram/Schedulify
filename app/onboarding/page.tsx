@@ -15,24 +15,23 @@ import { Label } from "@/components/ui/label";
 import { submitForm } from "@/actions/prismaAction";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
-import { zodSchema } from "@/actions/zodSchema";
-import { Loader2 } from "lucide-react";
+import { onboardingSchema } from "@/actions/zodSchema";
+import { SubmitButton } from "@/components/FormButton";
+import { useState } from "react";
 
 export default function CardWithForm() {
-  const [state, action, ispending] = useActionState(submitForm, undefined);
-
+  const [state, action, ispending] = useActionState(submitForm,null);
   const [form, fields] = useForm({
     onValidate({ formData }) {
       return parseWithZod(formData, {
-        schema: zodSchema,
+        schema: onboardingSchema,
       });
     },
     shouldValidate: "onBlur",
     shouldRevalidate: "onInput",
   });
-  console.log(ispending);
   return (
-    <div className="min-h-screen max-w-screen flex items-center justify-center">
+    <div className="min-h-screen bg-gradient-to-br from-purple-700 from-5% via-purple-800 via-10% to-black to-50% max-w-screen flex items-center justify-center">
       <Card className="w-[400px] mx-auto my-auto shadow-xl">
         <CardHeader>
           <CardTitle>
@@ -72,12 +71,11 @@ export default function CardWithForm() {
                   />
                 </div>
                 <p className="text-red-500 text-sm">{fields.userName.errors}</p>
+                <p className="text-red-500 text-sm">{state?.error.toString()}</p>
               </div>
             </div>
 
-            <Button className="w-full mt-6" type="submit">
-              {ispending ? <Loader2 className="animate-spin" /> : "Submit"}
-            </Button>
+            <SubmitButton className="w-full mt-5" text="Submit" />
           </CardContent>
         </form>
       </Card>
