@@ -31,8 +31,8 @@ export default function CardWithForm() {
     shouldRevalidate: "onInput",
   });
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-700 from-5% via-purple-800 via-10% to-black to-50% max-w-screen flex items-center justify-center">
-      <Card className="w-[400px] mx-auto my-auto shadow-xl">
+    <div className="min-h-screen px-6 bg-gradient-to-br from-blue-700 from-10% via-blue-600 via-20% to-slate-200 to-50% max-w-screen flex items-center justify-center">
+      <Card className="w-[500px] mx-auto my-auto shadow-xl">
         <CardHeader>
           <CardTitle>
             Welcome To <span className="text-primary">Sched</span>ulify
