@@ -1,11 +1,10 @@
-import { auth } from "@/lib/auth";
 import prisma from "@/lib/db";
 import { requireUser } from "@/lib/hooks";
 import { nylas, nylasConfig } from "@/lib/nylas";
 import { redirect } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET(req: NextRequest) {
   const session = await requireUser();
   const url = new URL(req.url);
   const code = url.searchParams.get("code");
@@ -32,7 +31,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
     console.log({ grantId });
   } catch (error) {
-    console.log("something went wrong");
+    console.error("something went wrong",error);
   }
 
   return redirect("/dashboard");

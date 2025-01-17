@@ -17,7 +17,7 @@ import { SubmitButton } from "@/components/FormButton";
 import { useState } from "react";
 
 export default function CardWithForm() {
-  const [state, action, ispending] = useActionState(submitForm, null);
+  const [state, action] = useActionState(submitForm, null);
   const [form, fields] = useForm({
     onValidate({ formData }) {
       return parseWithZod(formData, {
