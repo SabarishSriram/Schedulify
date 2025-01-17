@@ -11,17 +11,18 @@ import { requireUser } from "@/lib/hooks";
 import prisma from "@/lib/db";
 import { redirect } from "next/navigation";
 async function layout({ children }: { children: ReactNode }) {
-  const session = await requireUser()
+  const session = await requireUser();
 
-  const onboarding= await prisma.user.findUnique({
+  const onboarding = await prisma.user.findUnique({
     where: { id: session.user?.id },
-    select: { userName: true },
-  })
-  if(onboarding?.userName === null){
-    return redirect("/onboarding")
+    select: { userName: true, grantId: true },
+  });
+  if (onboarding?.userName === null) {
+    return redirect("/onboarding");
   }
-
-
+  if (onboarding?.grantId === null) {
+    return redirect("/onboarding/grant-id");
+  }
   return (
     <>
       <ThemeProvider

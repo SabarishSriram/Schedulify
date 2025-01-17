@@ -9,3 +9,7 @@ export async function requireUser() {
   }
   return session;
 }
+export async function initialvalue(){
+  const session = await auth();
+  return session?.user?.name
+}

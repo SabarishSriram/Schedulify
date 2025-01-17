@@ -3,14 +3,12 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CalendarIcon } from "lucide-react";
 import Image from "next/image";
-import emailImg from "@/public/Email API.png";
 import { auth } from "@/lib/auth";
 import Link from "next/link";
 

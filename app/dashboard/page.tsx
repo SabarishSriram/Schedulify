@@ -1,5 +1,4 @@
 "use server";
-import { requireUser } from "@/lib/hooks";
 
 async function page() {
   return (

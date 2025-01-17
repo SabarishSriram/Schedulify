@@ -1,12 +1,9 @@
 "use client";
-import React, { useActionState } from "react";
-
-import { Button } from "@/components/ui/button";
+import React, { useActionState, useEffect } from "react";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -20,7 +17,7 @@ import { SubmitButton } from "@/components/FormButton";
 import { useState } from "react";
 
 export default function CardWithForm() {
-  const [state, action, ispending] = useActionState(submitForm,null);
+  const [state, action, ispending] = useActionState(submitForm, null);
   const [form, fields] = useForm({
     onValidate({ formData }) {
       return parseWithZod(formData, {
@@ -30,6 +27,15 @@ export default function CardWithForm() {
     shouldValidate: "onBlur",
     shouldRevalidate: "onInput",
   });
+  const [initialName, setInitialName] = useState("");
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await fetch("/api/session");
+      const { data } = await res.json();
+      setInitialName(data.user.name);
+    };
+    fetchUser();
+  }, []);
   return (
     <div className="min-h-screen px-6 bg-gradient-to-br from-blue-700 from-10% via-blue-600 via-20% to-slate-200 to-50% max-w-screen flex items-center justify-center">
       <Card className="w-[500px] mx-auto my-auto shadow-xl">
@@ -48,7 +54,7 @@ export default function CardWithForm() {
                 <Label> Full Name</Label>
                 <Input
                   name={fields.name.name}
-                  defaultValue={fields.name.initialValue}
+                  defaultValue={initialName}
                   id={fields.name.key}
                   className=""
                   placeholder="Full Name"
@@ -67,11 +73,13 @@ export default function CardWithForm() {
                     defaultValue={fields.userName.initialValue}
                     id={fields.userName.key}
                     className="rounded-l-none border-l-0 border focus:ring-0"
-                    placeholder="test"
+                    placeholder="username"
                   />
                 </div>
                 <p className="text-red-500 text-sm">{fields.userName.errors}</p>
-                <p className="text-red-500 text-sm">{state?.error.toString()}</p>
+                <p className="text-red-500 text-sm">
+                  {state?.error.toString()}
+                </p>
               </div>
             </div>
 
