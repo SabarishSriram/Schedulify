@@ -31,7 +31,7 @@ async function layout({ children }: { children: ReactNode }) {
         enableSystem
         disableTransitionOnChange
       >
-        <div className="min-h-screen w-full grid md:grid-cols-[220px_1fr]">
+        <div className="min-h-screen w-full grid md:grid-cols-[250px_1fr]">
           <div className="hidden md:block rounded-br-3xl bg-muted">
             <div className="flex justify-center border-b items-center h-20">
               <Link className="flex items-center space-x-2" href="/">

@@ -1,8 +1,20 @@
+import SettingsForm from '@/components/SettingsForm'
+import { auth } from '@/lib/auth'
+import prisma from '@/lib/db'
+import { requireUser } from '@/lib/hooks'
 import React from 'react'
 
-function page() {
+async function page() {
+  const session = await requireUser()
+  const data = await prisma.user.findUnique({
+    where: { id: session?.user?.id },
+    select:{name:true, email:true, image:true
+    }
+  })
   return (
-    <div>Settings Page</div>
+    <>
+    <SettingsForm email={session.user?.email as string} name={session.user?.name as string} image={session.user?.image as string}/>
+    </>
   )
 }
 

@@ -4,6 +4,7 @@ import prisma from "@/lib/db";
 import { onboardingSchema } from "./zodSchema";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { requireUser } from "@/lib/hooks";
 
 export async function checkUsernameUnique(username: string) {
   const existingUser = await prisma.user.findUnique({
@@ -41,4 +42,22 @@ export async function submitForm(prevstate: any, formData: FormData) {
   });
   console.log(data);
   return redirect("/onboarding/grant-id");
+}
+
+export async function settingsForm(prevstate:any,formdata:FormData) {
+  const session = await requireUser();
+  const validatedFields = onboardingSchema.safeParse({
+    name: formdata.get("name"),
+  });
+  console.log("validated fields",validatedFields)
+  if (validatedFields){
+    console.log("lexgoo its WORKING!!!💦💦💦💦")
+    // const data = await prisma.user.update({
+    //   where:{id:session?.user?.id},
+    //   data:{
+        
+    //   }
+    // })
+  }
+
 }
