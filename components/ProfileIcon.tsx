@@ -22,26 +22,26 @@ async function ProfileIcon() {
           <Image
             src={session?.user?.image as string}
             alt="profile image"
-            width={20}
-            height={20}
+            width={90}
+            height={90}
             className="rounded-full size-10"
           />
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel>
-          <div className="flex items-center gap-3 px-3 py-2 ">
-            <div className=" h-full rounded-full overflow-hidden">
+          <div className="flex items-center gap-3 px-3 py-2">
+            <div className="h-full rounded-full overflow-hidden">
               <Image
                 src={session?.user?.image as string}
                 alt="profile image"
-                width={20}
-                height={20}
-                className="rounded-full size-8"
+                width={90}
+                height={90}
+                className="rounded-full size-10"
               />
             </div>
             <div className="font-bold">
-              {session?.user?.name}
+                {session?.user?.name}
               <p className="font-normal dark:text-slate-300 text-gray-600">
                 {session?.user?.email}
               </p>
@@ -54,7 +54,7 @@ async function ProfileIcon() {
             className="w-full flex items-center gap-3"
             href="/dashboard/settings"
           >
-            <Settings className="ml-3 size-15" />
+          <Settings className="ml-3 size-15" />
             Settings
           </Link>
         </DropdownMenuItem>

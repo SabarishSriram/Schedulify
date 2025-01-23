@@ -19,7 +19,6 @@ interface iAppProps {
 
 export function SubmitButton({ text, variant, className }: iAppProps) {
     const { pending } = useFormStatus();
-  
     return (
       <>
         {pending ? (
