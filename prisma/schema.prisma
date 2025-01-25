@@ -14,16 +14,17 @@ generator client {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String    @unique
-  emailVerified DateTime?
-  userName      String?   @unique
-  image         String?
-  grantId       String?
-  grantEmail    String?
-  accounts      Account[]
-  sessions      Session[]
+  id             String         @id @default(cuid())
+  name           String?
+  email          String         @unique
+  emailVerified  DateTime?
+  userName       String?        @unique
+  image          String?
+  grantId        String?
+  grantEmail     String?
+  accounts       Account[]
+  sessions       Session[]
+  availabilities Availability[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -66,4 +67,27 @@ model VerificationToken {
   expires    DateTime
 
   @@id([identifier, token])
+}
+
+model Availability {
+  id       String  @id @default(cuid())
+  day      Day
+  fromtime String
+  totime   String
+  isactive Boolean
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+}
+
+enum Day {
+  Monday
+  Tuesday
+  Wednesday
+  Thursday
+  Friday
+  Saturday
+  Sunday
 }

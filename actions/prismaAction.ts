@@ -30,7 +30,7 @@ export async function submitForm(prevstate: any, formData: FormData) {
 
   const isUnique = await checkUsernameUnique(userName);
   if (!isUnique) {
-    return { error:  ["Username is already taken"]};
+    return { error: ["Username is already taken"] };
   }
 
   const data = await prisma.user.update({
@@ -38,25 +38,73 @@ export async function submitForm(prevstate: any, formData: FormData) {
     data: {
       name,
       userName,
+      availabilities: {
+        createMany: {
+          data: [
+            {
+              day: "Monday",
+              fromtime: "8:00",
+              totime: "18:00",
+              isactive: true,
+            },
+            {
+              day: "Tuesday",
+              fromtime: "8:00",
+              totime: "18:00",
+              isactive: true,
+            },
+            {
+              day: "Wednesday",
+              fromtime: "8:00",
+              totime: "19:00",
+              isactive: true,
+            },
+            {
+              day: "Thursday",
+              fromtime: "8:00",
+              totime: "18:00",
+              isactive: true,
+            },
+            {
+              day: "Friday",
+              fromtime: "8:00",
+              totime: "18:00",
+              isactive: true,
+            },
+            {
+              day: "Saturday",
+              fromtime: "8:00",
+              totime: "18:00",
+              isactive: true,
+            },
+            {
+              day:"Sunday",
+              fromtime:"8:00",
+              totime: "18:00",
+              isactive:true
+            }
+          ],
+        },
+      },
     },
   });
   console.log(data);
   return redirect("/onboarding/grant-id");
 }
 
-export async function settingsForm(prevstate:any,formdata:FormData) {
+export async function settingsForm(prevstate: any, formdata: FormData) {
   const session = await requireUser();
   const validatedFields = settingsSchema.safeParse({
     name: formdata.get("name"),
   });
-  if (validatedFields.success){
+  if (validatedFields.success) {
     const data = await prisma.user.update({
-      where:{id:session?.user?.id},
-      data:{
-        name:validatedFields.data.name
-      }
-    })
-    console.log(data)
+      where: { id: session?.user?.id },
+      data: {
+        name: validatedFields.data.name,
+      },
+    });
+    console.log(data);
   }
-  return redirect("/dashboard/settings")
+  return redirect("/dashboard/settings");
 }
