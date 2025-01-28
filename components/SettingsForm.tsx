@@ -22,7 +22,7 @@ interface SettingsFormProps {
 }
 
 function SettingsForm({ email, name, image }: SettingsFormProps) {
-  const [state, action] = useActionState(settingsForm, null);
+  const [,action] = useActionState(settingsForm, null);
   const [form, fields] = useForm({
     onValidate({ formData }) {
       return parseWithZod(formData, {
