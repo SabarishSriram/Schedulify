@@ -5,6 +5,8 @@ import { onboardingSchema, settingsSchema } from "./zodSchema";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { requireUser } from "@/lib/hooks";
+import { object } from "zod";
+import { revalidatePath } from "next/cache";
 
 export async function checkUsernameUnique(username: string) {
   const existingUser = await prisma.user.findUnique({
@@ -56,7 +58,7 @@ export async function submitForm(prevstate: any, formData: FormData) {
             {
               day: "Wednesday",
               fromtime: "8:00",
-              totime: "19:00",
+              totime: "18:00",
               isactive: true,
             },
             {
@@ -78,11 +80,11 @@ export async function submitForm(prevstate: any, formData: FormData) {
               isactive: true,
             },
             {
-              day:"Sunday",
-              fromtime:"8:00",
+              day: "Sunday",
+              fromtime: "8:00",
               totime: "18:00",
-              isactive:true
-            }
+              isactive: true,
+            },
           ],
         },
       },
@@ -107,4 +109,42 @@ export async function settingsForm(prevstate: any, formdata: FormData) {
     console.log(data);
   }
   return redirect("/dashboard/settings");
+}
+
+export async function updateAvailabiltyAction(formdata: FormData) {
+  const session = await requireUser();
+
+  const rawData = Object.fromEntries(formdata.entries());
+  const availabilityData = Object.keys(rawData)
+    .filter((key) => key.startsWith("id-"))
+    .map((key) => {
+      const id = key.replace("id-", "");
+      return {
+        id,
+        isActive: rawData[`isActive-${id}`] === "on",
+        fromTime: rawData[`fromTime-${id}`] as string,
+        tillTime: rawData[`tillTime-${id}`] as string,
+      };
+    });
+
+  try {
+    await prisma.$transaction(
+      availabilityData.map((item) =>
+        prisma.availability.update({
+          where: { id: item.id },
+          data: {
+            isactive: item.isActive,
+            fromtime: item.fromTime,
+            totime: item.tillTime,
+          },
+        })
+      )
+    );
+
+    revalidatePath("/dashboard/availability");
+    return { status: "success", message: "Availability updated successfully" };
+  } catch (error) {
+    console.error("Error updating availability:", error);
+    return { status: "error", message: "Failed to update availability" };
+  }
 }

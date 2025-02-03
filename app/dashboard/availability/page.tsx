@@ -5,14 +5,19 @@ import { requireUser } from "@/lib/hooks";
 async function page() {
   await requireUser();
   const data = await prisma.availability.findMany({
-    select: { day: true, isactive: true, fromtime: true, totime: true },
+    select: {
+      day: true,
+      isactive: true,
+      fromtime: true,
+      totime: true,
+      id: true,
+    },
   });
-  
+
   return (
-    <>
-    <Availability data={data} />
-    </>
-    
+    <div className="p-4">
+      <Availability data={data} />
+    </div>
   );
 }
 
