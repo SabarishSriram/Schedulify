@@ -34,9 +34,12 @@ export async function submitForm(prevstate: any, formData: FormData) {
   if (!isUnique) {
     return { error: ["Username is already taken"] };
   }
-
+  const res= await prisma.availability.deleteMany({
+    where:{id:session?.user?.id}
+  })
+  console.log(res)
   const data = await prisma.user.update({
-    where: { id: session?.user?.id },
+    where: { id: session?.user?.id},
     data: {
       name,
       userName,
@@ -45,43 +48,43 @@ export async function submitForm(prevstate: any, formData: FormData) {
           data: [
             {
               day: "Monday",
-              fromtime: "8:00",
+              fromtime: "08:00",
               totime: "18:00",
               isactive: true,
             },
             {
               day: "Tuesday",
-              fromtime: "8:00",
+              fromtime: "08:00",
               totime: "18:00",
               isactive: true,
             },
             {
               day: "Wednesday",
-              fromtime: "8:00",
+              fromtime: "08:00",
               totime: "18:00",
               isactive: true,
             },
             {
               day: "Thursday",
-              fromtime: "8:00",
+              fromtime: "08:00",
               totime: "18:00",
               isactive: true,
             },
             {
               day: "Friday",
-              fromtime: "8:00",
+              fromtime: "08:00",
               totime: "18:00",
               isactive: true,
             },
             {
               day: "Saturday",
-              fromtime: "8:00",
+              fromtime: "08:00",
               totime: "18:00",
               isactive: true,
             },
             {
               day: "Sunday",
-              fromtime: "8:00",
+              fromtime: "08:00",
               totime: "18:00",
               isactive: true,
             },

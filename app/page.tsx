@@ -1,3 +1,4 @@
+import { Hero } from "@/components/Hero";
 import Navbar from "@/components/Navbar";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
@@ -10,7 +11,7 @@ async function page() {
   return (
     <div className="">
       <Navbar />
-      <h1>Dashboard</h1>
+      <Hero/>
     </div>
   );
 }

@@ -3,6 +3,7 @@ import React from "react";
 import logo from "../public/logo.png";
 import Link from "next/link";
 import AuthDialog from "./AuthDialog";
+import { Togglebutton } from "./Togglebutton";
 
 function Navbar() {
   return (
@@ -25,7 +26,8 @@ function Navbar() {
           </span>
         </Link>
       </div>
-      <div>
+      <div className="flex items-center space-x-3">
+        <Togglebutton/>
         <AuthDialog />
       </div>
     </div>
