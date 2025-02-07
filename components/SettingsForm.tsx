@@ -32,6 +32,7 @@ function SettingsForm({ email, name, image }: SettingsFormProps) {
     shouldValidate: "onBlur",
     shouldRevalidate: "onInput",
   });
+  console.log(fields.name.name)
   return (
     <div className="max-w-screen justify-center items-center p-7 ">
       <Card className=" min-w-full shadow-xl">

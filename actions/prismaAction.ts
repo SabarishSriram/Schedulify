@@ -1,12 +1,13 @@
 "use server";
 
 import prisma from "@/lib/db";
-import { onboardingSchema, settingsSchema } from "./zodSchema";
+import { eventTypeSchema, onboardingSchema, settingsSchema } from "./zodSchema";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { requireUser } from "@/lib/hooks";
-import { object } from "zod";
 import { revalidatePath } from "next/cache";
+import { title } from "process";
+import { parseWithZod } from "@conform-to/zod";
 
 export async function checkUsernameUnique(username: string) {
   const existingUser = await prisma.user.findUnique({
@@ -34,12 +35,12 @@ export async function submitForm(prevstate: any, formData: FormData) {
   if (!isUnique) {
     return { error: ["Username is already taken"] };
   }
-  const res= await prisma.availability.deleteMany({
-    where:{id:session?.user?.id}
-  })
-  console.log(res)
+  const res = await prisma.availability.deleteMany({
+    where: { id: session?.user?.id },
+  });
+  console.log(res);
   const data = await prisma.user.update({
-    where: { id: session?.user?.id},
+    where: { id: session?.user?.id },
     data: {
       name,
       userName,
@@ -150,4 +151,30 @@ export async function updateAvailabiltyAction(formdata: FormData) {
     console.error("Error updating availability:", error);
     return { status: "error", message: "Failed to update availability" };
   }
+}
+
+export async function createEvent(prevstate:any,formData: FormData) {
+  const session = await requireUser();
+
+  const submission = parseWithZod(formData, {
+    schema: eventTypeSchema
+    })
+
+  if (submission.status !== "success") {
+    return submission.reply();
+  }
+
+  const data = await prisma.eventType.create({
+    data: {
+      title: submission.value.title,
+      duration: submission.value.duration,
+      url: submission.value.url,
+      description: submission.value.description,
+      videocallsoftware: submission.value.videoCallSoftware,
+      userId:session.user?.id
+    },
+  });
+  console.log(data)
+
+  return redirect("/dashboard");
 }
