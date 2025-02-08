@@ -1,10 +1,6 @@
 "use client";
 
-import { createEvent} from "@/actions/prismaAction";
-import { SubmitButton } from "@/components/FormButton";
-import { eventTypeSchema } from "@/actions/zodSchema";
 import { Button } from "@/components/ui/button";
-import { ButtonGroup } from "@/components/ButtonGroup";
 import {
   Card,
   CardContent,
@@ -15,6 +11,14 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import Link from "next/link";
+import { SubmitButton } from "../components/FormButton";
+import { useFormState } from "react-dom";
+import { useForm } from "@conform-to/react";
+import { parseWithZod } from "@conform-to/zod";
+import { eventTypeSchema } from "@/actions/zodSchema";
+import { updateEvent } from "@/actions/prismaAction";
 import {
   Select,
   SelectContent,
@@ -24,19 +28,32 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { useForm } from "@conform-to/react";
-import { parseWithZod } from "@conform-to/zod";
-import Link from "next/link";
-import React, { useState } from "react";
-import { useFormState } from "react-dom";
+import { ButtonGroup } from "@/components/ButtonGroup";
+import { useState } from "react";
+
+interface iAppProps {
+  id: string;
+  title: string;
+  url: string;
+  description: string;
+  duration: number;
+  callProvider: string;
+}
 
 type Platform = "Zoom Meeting" | "Google Meet" | "Microsoft Teams";
 
-export const CreateNewEvent = () => {
-  const [, action] = useFormState(createEvent, undefined);
+export function EditEventTypeForm({
+  description,
+  duration,
+  title,
+  url,
+  callProvider,
+  id,
+}: iAppProps) {
+  const [lastResult, action] = useFormState(updateEvent, undefined);
   const [form, fields] = useForm({
     // Sync the result of last submission
+    lastResult,
 
     // Reuse the validation logic on the client
     onValidate({ formData }) {
@@ -47,7 +64,9 @@ export const CreateNewEvent = () => {
     shouldValidate: "onBlur",
     shouldRevalidate: "onInput",
   });
-  const [activePlatform, setActivePlatform] = useState<Platform>("Google Meet");
+  const [activePlatform, setActivePlatform] = useState<Platform>(
+    callProvider as Platform
+  );
 
   const togglePlatform = (platform: Platform) => {
     setActivePlatform(platform);
@@ -62,20 +81,21 @@ export const CreateNewEvent = () => {
           </CardDescription>
         </CardHeader>
         <form noValidate id={form.id} onSubmit={form.onSubmit} action={action}>
-          <CardContent className="grid gap-y-2">
+          <input type="hidden" name="id" value={id} />
+          <CardContent className="grid gap-y-5">
             <div className="flex flex-col gap-y-2">
               <Label>Title</Label>
               <Input
                 name={fields.title.name}
                 key={fields.title.key}
-                defaultValue={fields.title.initialValue}
+                defaultValue={title}
                 placeholder="30 min meeting"
               />
               <p className="text-red-500 text-sm">{fields.title.errors}</p>
             </div>
 
             <div className="grid gap-y-2 ">
-              <Label>URL Slug</Label>
+              <Label>Url</Label>
               <div className="flex rounded-md">
                 <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-muted bg-muted text-muted-foreground text-sm">
                   CalMarshal.com/
@@ -83,7 +103,7 @@ export const CreateNewEvent = () => {
                 <Input
                   type="text"
                   key={fields.url.key}
-                  defaultValue={fields.url.initialValue}
+                  defaultValue={url}
                   name={fields.url.name}
                   placeholder="example-user-1"
                   className="rounded-l-none"
@@ -98,7 +118,7 @@ export const CreateNewEvent = () => {
               <Textarea
                 name={fields.description.name}
                 key={fields.description.key}
-                defaultValue={fields.description.initialValue}
+                defaultValue={description}
                 placeholder="30 min meeting"
               />
               <p className="text-red-500 text-sm">
@@ -111,7 +131,7 @@ export const CreateNewEvent = () => {
               <Select
                 name={fields.duration.name}
                 key={fields.duration.key}
-                defaultValue={fields.duration.initialValue}
+                defaultValue={String(duration)}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select the duration" />
@@ -177,12 +197,10 @@ export const CreateNewEvent = () => {
             <Button asChild variant="secondary">
               <Link href="/dashboard">Cancel</Link>
             </Button>
-            <SubmitButton text="Create Event Type" />
+            <SubmitButton text="Edit Event Type" />
           </CardFooter>
         </form>
       </Card>
     </div>
   );
-};
-
-export default CreateNewEvent;
+}

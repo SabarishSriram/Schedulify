@@ -52,7 +52,7 @@ async function layout({ children }: { children: ReactNode }) {
               <DashboardLinks />
             </div>
           </div>
-          <div>
+          <div className="">
             <div className="h-20 bg-muted flex items-center justify-between px-4">
               <div className="flex items-center gap-4">
                 <MobileSidebarMenu />

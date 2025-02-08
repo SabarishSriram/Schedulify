@@ -153,12 +153,12 @@ export async function updateAvailabiltyAction(formdata: FormData) {
   }
 }
 
-export async function createEvent(prevstate:any,formData: FormData) {
+export async function createEvent(prevstate: any, formData: FormData) {
   const session = await requireUser();
 
   const submission = parseWithZod(formData, {
-    schema: eventTypeSchema
-    })
+    schema: eventTypeSchema,
+  });
 
   if (submission.status !== "success") {
     return submission.reply();
@@ -171,10 +171,49 @@ export async function createEvent(prevstate:any,formData: FormData) {
       url: submission.value.url,
       description: submission.value.description,
       videocallsoftware: submission.value.videoCallSoftware,
-      userId:session.user?.id
+      userId: session.user?.id,
     },
   });
-  console.log(data)
+  console.log(data);
 
   return redirect("/dashboard");
+}
+
+export async function updateEvent(prevstate: any, formData: FormData) {
+  const session = await requireUser();
+
+  const submission = parseWithZod(formData, {
+    schema: eventTypeSchema,
+  });
+
+  if (submission.status !== "success") {
+    return submission.reply();
+  }
+  const data = await prisma.eventType.update({
+    where: {
+      id: formData.get("id") as string,
+      userId: session.user?.id,
+    },
+    data: {
+      title: submission.value.title,
+      duration: submission.value.duration,
+      url: submission.value.url,
+      description: submission.value.description,
+      videocallsoftware: submission.value.videoCallSoftware,
+    },
+  });
+  console.log(data);
+
+  return redirect("/dashboard");
+}
+
+export async function deleteEvent(formdata:FormData) {
+  const session = requireUser();
+  const data = await prisma.eventType.delete({
+    where: {
+      id: formdata.get("id") as string,
+    },
+  });
+  return redirect("/dashboard");
+  
 }

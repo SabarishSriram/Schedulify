@@ -1,6 +1,4 @@
-import Image from "next/image";
 import AuthDialog from "./AuthDialog";
-import image from "../public/Screenshot.png";
 export function Hero() {
   return (
     <section className="relative flex items-center justify-center">

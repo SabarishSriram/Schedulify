@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { Ban, FileIcon, PlusCircle } from "lucide-react";
+import { Ban, PlusCircle } from "lucide-react";
 import Link from "next/link";
 
 interface iAppProps {
