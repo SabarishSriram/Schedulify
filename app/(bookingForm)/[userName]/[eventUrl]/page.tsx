@@ -1,6 +1,6 @@
-
 import { RenderCalendar } from "@/components/Calendar/RenderCalendar";
 import { SubmitButton } from "@/components/FormButton";
+import { TimeSlots } from "@/components/TimeSlots";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -48,8 +48,16 @@ async function getData(username: string, eventName: string) {
   return eventType;
 }
 
-async function Page({ params, searchParams }: { params: { userName: string; eventUrl: string }; searchParams: { date?: string; time?: string } }) {
-  const selectedDate = searchParams.date ? new Date(searchParams.date) : new Date();
+async function Page({
+  params,
+  searchParams,
+}: {
+  params: { userName: string; eventUrl: string };
+  searchParams: { date?: string; time?: string };
+}) {
+  const selectedDate = searchParams.date
+    ? new Date(searchParams.date)
+    : new Date();
   const eventType = await getData(params.userName, params.eventUrl);
 
   const formattedDate = new Intl.DateTimeFormat("en-US", {
@@ -58,8 +66,7 @@ async function Page({ params, searchParams }: { params: { userName: string; even
     month: "long",
   }).format(selectedDate);
 
-  // const showForm = !!searchParams.date && !!searchParams.time;
-  const showForm=true
+  const showForm = !!searchParams.date && !!searchParams.time;
 
   return (
     <div className="min-h-screen w-screen flex items-center justify-center">
@@ -178,7 +185,14 @@ async function Page({ params, searchParams }: { params: { userName: string; even
             />
 
             <div className="my-4 md:my-0">
-              <RenderCalendar daysofWeek={eventType?.User?.availabilities?.map(({ day, isactive }) => ({ day, isActive: isactive })) || []} />
+              <RenderCalendar
+                daysofWeek={
+                  eventType?.User?.availabilities?.map(({ day, isactive }) => ({
+                    day,
+                    isActive: isactive,
+                  })) || []
+                }
+              />
             </div>
 
             <Separator
@@ -186,11 +200,11 @@ async function Page({ params, searchParams }: { params: { userName: string; even
               className="hidden md:block h-full w-[1px]"
             />
 
-            {/* <TimeSlots
+            <TimeSlots
               selectedDate={selectedDate}
               userName={params.userName}
               meetingDuration={eventType.duration}
-            /> */}
+            />
           </CardContent>
         </Card>
       )}

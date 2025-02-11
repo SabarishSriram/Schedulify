@@ -18,7 +18,7 @@ export async function checkUsernameUnique(username: string) {
 }
 
 export async function submitForm(prevstate: any, formData: FormData) {
-  const session = await auth();
+  const session = await requireUser();
 
   const validatedFields = onboardingSchema.safeParse({
     name: formData.get("name"),
@@ -35,66 +35,81 @@ export async function submitForm(prevstate: any, formData: FormData) {
   if (!isUnique) {
     return { error: ["Username is already taken"] };
   }
-  const res = await prisma.availability.deleteMany({
-    where: { id: session?.user?.id },
-  });
-  console.log(res);
-  const data = await prisma.user.update({
-    where: { id: session?.user?.id },
-    data: {
-      name,
-      userName,
-      availabilities: {
-        createMany: {
-          data: [
-            {
-              day: "Monday",
-              fromtime: "08:00",
-              totime: "18:00",
-              isactive: true,
-            },
-            {
-              day: "Tuesday",
-              fromtime: "08:00",
-              totime: "18:00",
-              isactive: true,
-            },
-            {
-              day: "Wednesday",
-              fromtime: "08:00",
-              totime: "18:00",
-              isactive: true,
-            },
-            {
-              day: "Thursday",
-              fromtime: "08:00",
-              totime: "18:00",
-              isactive: true,
-            },
-            {
-              day: "Friday",
-              fromtime: "08:00",
-              totime: "18:00",
-              isactive: true,
-            },
-            {
-              day: "Saturday",
-              fromtime: "08:00",
-              totime: "18:00",
-              isactive: true,
-            },
-            {
-              day: "Sunday",
-              fromtime: "08:00",
-              totime: "18:00",
-              isactive: true,
-            },
-          ],
+  const no=await prisma.availability.findMany({
+    where:{userId: session.user?.id}
+  })
+  console.log(no,"hi this is the problem")
+  if(no.length>0){
+    return redirect("/onboarding/grant-id")
+  }
+  else{
+    const res = await prisma.availability.createMany({
+      data: [
+        {
+          day: "Monday",
+          fromtime: "08:00",
+          totime: "18:00",
+          isactive: true,
+          userId:session.user?.id
         },
-      },
-    },
-  });
-  console.log(data);
+        {
+          day: "Tuesday",
+          fromtime: "08:00",
+          totime: "18:00",
+          isactive: true,
+          userId:session.user?.id
+  
+        },
+        {
+          day: "Wednesday",
+          fromtime: "08:00",
+          totime: "18:00",
+          isactive: true,
+          userId:session.user?.id
+        },
+        {
+          day: "Thursday",
+          fromtime: "08:00",
+          totime: "18:00",
+          isactive: true,
+          userId:session.user?.id
+        },
+        {
+          day: "Friday",
+          fromtime: "08:00",
+          totime: "18:00",
+          isactive: true,
+          userId:session.user?.id
+        },
+        {
+          day: "Saturday",
+          fromtime: "08:00",
+          totime: "18:00",
+          isactive: true,
+          userId:session.user?.id
+        },
+        {
+          day: "Sunday",
+          fromtime: "08:00",
+          totime: "18:00",
+          isactive: true,
+          userId:session.user?.id
+        },
+      ],
+    });
+
+  }
+  
+  // const data = await prisma.user.update({
+  //   where: { id: session.user?.id },
+  //   data: {
+  //     availabilities: {
+  //       createMany: {
+  //         data: [],
+  //       },
+  //     },
+  //   },
+  // });
   return redirect("/onboarding/grant-id");
 }
 
@@ -135,7 +150,7 @@ export async function updateAvailabiltyAction(formdata: FormData) {
     await prisma.$transaction(
       availabilityData.map((item) =>
         prisma.availability.update({
-          where: { id: item.id },
+          where: { id: item.id , userId: session.user?.id},
           data: {
             isactive: item.isActive,
             fromtime: item.fromTime,
@@ -207,7 +222,7 @@ export async function updateEvent(prevstate: any, formData: FormData) {
   return redirect("/dashboard");
 }
 
-export async function deleteEvent(formdata:FormData) {
+export async function deleteEvent(formdata: FormData) {
   const session = requireUser();
   const data = await prisma.eventType.delete({
     where: {
@@ -215,5 +230,4 @@ export async function deleteEvent(formdata:FormData) {
     },
   });
   return redirect("/dashboard");
-  
 }

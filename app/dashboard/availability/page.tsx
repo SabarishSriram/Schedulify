@@ -3,8 +3,9 @@ import prisma from "@/lib/db";
 import { requireUser } from "@/lib/hooks";
 
 async function page() {
-  await requireUser();
+  const session = await requireUser();
   const data = await prisma.availability.findMany({
+    where:{userId:session.user?.id},
     select: {
       day: true,
       isactive: true,
