@@ -1,3 +1,4 @@
+import { createMeeting } from "@/actions/prismaAction";
 import { RenderCalendar } from "@/components/Calendar/RenderCalendar";
 import { SubmitButton } from "@/components/FormButton";
 import { TimeSlots } from "@/components/TimeSlots";
@@ -115,7 +116,7 @@ async function Page({
               className="hidden md:block h-full w-[1px]"
             />
 
-            <form className="flex flex-col gap-y-4">
+            <form className="flex flex-col gap-y-4 " action={createMeeting}>
               <input type="hidden" name="eventTypeId" value={eventType?.id} />
               <input type="hidden" name="username" value={params?.userName} />
               <input type="hidden" name="fromTime" value={searchParams.time} />
@@ -135,7 +136,7 @@ async function Page({
                 <Input name="email" placeholder="johndoe@gmail.com" />
               </div>
 
-              <SubmitButton text="Book Meeting" />
+              <SubmitButton className="w-full mt-8" text="Book Meeting" />
             </form>
           </CardContent>
         </Card>

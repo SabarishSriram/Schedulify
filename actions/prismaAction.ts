@@ -8,6 +8,7 @@ import { requireUser } from "@/lib/hooks";
 import { revalidatePath } from "next/cache";
 import { title } from "process";
 import { parseWithZod } from "@conform-to/zod";
+import { nylas } from "@/lib/nylas";
 
 export async function checkUsernameUnique(username: string) {
   const existingUser = await prisma.user.findUnique({
@@ -99,17 +100,6 @@ export async function submitForm(prevstate: any, formData: FormData) {
     });
 
   }
-  
-  // const data = await prisma.user.update({
-  //   where: { id: session.user?.id },
-  //   data: {
-  //     availabilities: {
-  //       createMany: {
-  //         data: [],
-  //       },
-  //     },
-  //   },
-  // });
   return redirect("/onboarding/grant-id");
 }
 
@@ -230,4 +220,69 @@ export async function deleteEvent(formdata: FormData) {
     },
   });
   return redirect("/dashboard");
+}
+
+export async function createMeeting(formData: FormData) {
+  const getUserData = await prisma.user.findUnique({
+    where: {
+      userName: formData.get("username") as string,
+    },
+    select: {
+      grantEmail: true,
+      grantId: true,
+    },
+  });
+
+  if (!getUserData) {
+    throw new Error("User not found");
+  }
+
+  const eventTypeData = await prisma.eventType.findUnique({
+    where: {
+      id: formData.get("eventTypeId") as string,
+    },
+    select: {
+      title: true,
+      description: true,
+    },
+  });
+
+  const formTime = formData.get("fromTime") as string;
+  const meetingLength = Number(formData.get("meetingLength"));
+  const eventDate = formData.get("eventDate") as string;
+
+  const startDateTime = new Date(`${eventDate}T${formTime}:00`);
+
+  // Calculate the end time by adding the meeting length (in minutes) to the start time
+  const endDateTime = new Date(startDateTime.getTime() + meetingLength * 60000);
+
+  const res=await nylas.events.create({
+    identifier: getUserData?.grantId as string,
+    requestBody: {
+      title: eventTypeData?.title,
+      description: eventTypeData?.description,
+      when: {
+        startTime: Math.floor(startDateTime.getTime() / 1000),
+        endTime: Math.floor(endDateTime.getTime() / 1000),
+      },
+      conferencing: {
+        autocreate: {},
+        provider: "Google Meet",
+      },
+      participants: [
+        {
+          name: formData.get("name") as string,
+          email: formData.get("email") as string,
+          status: "yes",
+        },
+      ],
+    },
+    queryParams: {
+      calendarId: getUserData?.grantEmail as string,
+      notifyParticipants: true,
+    },
+  });
+  console.log(res)
+
+  return redirect(`/success`);
 }
