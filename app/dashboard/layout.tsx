@@ -10,6 +10,8 @@ import ProfileIcon from "@/components/ProfileIcon";
 import { requireUser } from "@/lib/hooks";
 import prisma from "@/lib/db";
 import { redirect } from "next/navigation";
+import { Toaster } from "@/components/ui/toaster";
+
 async function layout({ children }: { children: ReactNode }) {
   const session = await requireUser();
 
@@ -76,6 +78,7 @@ async function layout({ children }: { children: ReactNode }) {
               </div>
             </div>
             {children}
+            <Toaster/>
           </div>
         </div>
       </ThemeProvider>
