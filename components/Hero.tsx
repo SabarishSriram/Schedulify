@@ -1,22 +1,22 @@
-import { cn } from "@/lib/utils";
 import AuthDialog from "./AuthDialog";
-import { DotPattern } from "./ui/magicui/dot-pattern";
-import { useTheme } from "next-themes";
+import { FlickeringGrid } from "./ui/magicui/flickering-grid";
+
 export function Hero() {
   return (
     <section className="relative flex items-center justify-center">
-       <DotPattern
-        width={20}
-        height={20}
-        cx={1}
-        cy={1}
-        cr={1}
-        className={cn(
-          "[mask-image:linear-gradient(to_bottom,white,transparent)] fill-neutral-300/100 dark:[mask-image:linear-gradient(to_bottom,white,transparent)] fill-neutral-600/50"
-        )}
-        
-      />
-      
+      {/* Background with Flickering Grid */}
+      <div className="absolute w-full inset-0 -z-10 overflow-hidden rounded-lg">
+        <FlickeringGrid
+          className="relative inset-0 z-0 [mask-image:linear-gradient(to_bottom,white,transparent)]"
+          squareSize={4}
+          gridGap={6}
+          color="#60A5FA"
+          maxOpacity={0.4}
+          flickerChance={0.1}
+          height={800}
+          width={1900}
+        />
+      </div>
 
       <div className="relative items-center w-full pt-12 lg:pt-12">
         <div className="text-center">
@@ -33,15 +33,13 @@ export function Hero() {
             Scheduling a meeting can be a pain. But we at Schedulify make it
             easy for your clients to schedule meetings with you.
           </p>
+
           <div className="p-4">
             <AuthDialog />
           </div>
         </div>
 
-        <div
-          className="relative
-         items-center w-full mx-auto rounded-2xl md:rounded-full -z-20 -mt-12 lg:-mt-20"
-        >
+        <div className="relative items-center w-full mx-auto rounded-2xl md:rounded-full -z-20 -mt-12 lg:-mt-20">
           <svg
             className="relative inset-0 blur-3xl"
             style={{ zIndex: -1 }}

@@ -13,7 +13,7 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { ClipboardCopy, CopyIcon, ExternalLink, Pen, Settings, Trash, Users2 } from "lucide-react";
+import { ExternalLink, Pen, Settings, Trash, Users2 } from "lucide-react";
 import Link from "next/link";
 import { CardDescription, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";

@@ -14,7 +14,7 @@ function Copy(data: data) {
     toast({
         title: "Copied to Clipboard!",
         description: data.url,
-        className:"bg-primary/80"
+        className:"bg-primary/80 dark:text-white"
       })
     }
 

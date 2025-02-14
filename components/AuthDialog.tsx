@@ -6,17 +6,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
-import { Button } from "./ui/button";
 import Image from "next/image";
 import logo from "../public/logo.png";
 import SubmitButton from "./SubmitButton";
+import { InteractiveHoverButton } from "./ui/magicui/interactive-hover-button";
 
 function AuthDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="bg-primary">Try for Free</Button>
+        <InteractiveHoverButton className="">Try for Free</InteractiveHoverButton>
       </DialogTrigger>
+      
 
       <DialogContent className="max-w-sm">
         <DialogTitle className="flex items-center py-3 space-x-2 justify-center">

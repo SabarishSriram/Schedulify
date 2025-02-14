@@ -15,6 +15,8 @@ import { parseWithZod } from "@conform-to/zod";
 import { onboardingSchema } from "@/actions/zodSchema";
 import { SubmitButton } from "@/components/FormButton";
 import { useState } from "react";
+import { DotPattern } from "@/components/ui/magicui/dot-pattern";
+import { cn } from "@/lib/utils";
 
 export default function CardWithForm() {
   const [state, action] = useActionState(submitForm, null);
@@ -37,8 +39,18 @@ export default function CardWithForm() {
     fetchUser();
   }, []);
   return (
-    <div className="min-h-screen px-6 bg-gradient-to-br from-blue-700 from-10% via-blue-600 via-20% to-slate-200 to-50% max-w-screen flex items-center justify-center">
-      <Card className="w-[500px] mx-auto my-auto shadow-xl">
+    <div className="min-h-screen px-6 bg-black dark:bg-white max-w-screen flex items-center justify-center">
+      <DotPattern
+        width={20}
+        height={20}
+        cx={1}
+        cy={1}
+        cr={1}
+        className={cn(
+          "[mask-image:linear-gradient(to_bottom,white,transparent)] fill-neutral-300/100 dark:[mask-image:linear-gradient(to_bottom,white,transparent)] fill-neutral-600/50"
+        )}
+      />
+      <Card className="w-[500px] mx-auto my-auto shadow-xl z-30">
         <CardHeader>
           <CardTitle>
             Welcome To <span className="text-primary">Sched</span>ulify
@@ -65,8 +77,8 @@ export default function CardWithForm() {
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="framework">Username</Label>
                 <div className="flex rounded-md">
-                  <span className="flex-inline bg-muted  px-3 text-sm border-r-0 text-muted-foreground py-2 rounded-l-lg border border-muted">
-                    Schedulify.com/
+                  <span className="flex-inline bg-muted   px-3 text-sm border-r-0 text-muted-foreground py-2 rounded-l-lg border border-muted">
+                  schedulify.vercel.app/
                   </span>
                   <Input
                     name={fields.userName.name}

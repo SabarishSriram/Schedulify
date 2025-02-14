@@ -11,14 +11,26 @@ import { CalendarIcon } from "lucide-react";
 import Image from "next/image";
 import { auth } from "@/lib/auth";
 import Link from "next/link";
+import { DotPattern } from "@/components/ui/magicui/dot-pattern";
+import { cn } from "@/lib/utils";
 
 async function page() {
   const session = await auth();
   const name = session?.user?.name;
 
   return (
-    <div className="min-h-screen px-6 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white via-violet-500 to-purple-700 max-w-screen flex items-center justify-center">
-      <Card className="w-[500px] mx-auto my-auto shadow-xl">
+    <div className="min-h-screen bg-black dark:bg-white px-6  max-w-screen flex items-center justify-center">
+      <DotPattern
+              width={20}
+              height={20}
+              cx={1}
+              cy={1}
+              cr={1}
+              className={cn(
+                "[mask-image:radial-gradient(600px,white,transparent)] fill-neutral-600/50 dark:[mask-image:radial-gradient(600px,white,transparent)]  fill-neutral-400/80"
+              )}
+            />
+      <Card className="w-[500px] mx-auto my-auto shadow-xl z-30">
         <CardHeader>
           <CardTitle>{name}, you are almost done!</CardTitle>
           <CardDescription>
