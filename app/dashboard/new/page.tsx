@@ -77,8 +77,9 @@ export const CreateNewEvent = () => {
             <div className="grid gap-y-2 ">
               <Label>URL Slug</Label>
               <div className="flex rounded-md">
-                <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-muted bg-muted text-muted-foreground text-sm">
-                  CalMarshal.com/
+                <span className="inline-flex items-center w-full px-3 rounded-l-md border border-r-0 border-muted bg-muted text-muted-foreground text-sm">
+                schedulify-beta.vercel.app/
+
                 </span>
                 <Input
                   type="text"

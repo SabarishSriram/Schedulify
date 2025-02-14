@@ -13,10 +13,11 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Pen, Settings, Trash, Users2 } from "lucide-react";
+import { ClipboardCopy, CopyIcon, ExternalLink, Pen, Settings, Trash, Users2 } from "lucide-react";
 import Link from "next/link";
 import { CardDescription, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
+import Copy from "@/components/Copy";
 
 export default async function Page() {
   const session = await requireUser();
@@ -78,6 +79,7 @@ export default async function Page() {
                       <DropdownMenuLabel>Event</DropdownMenuLabel>
                       <DropdownMenuSeparator />
                       <DropdownMenuGroup>
+                        <Copy url={`${process.env.NEXT_URL}/${data?.userName}/${item.url}`}/>
                         <DropdownMenuItem asChild>
                           <Link href={`/${data?.userName}/${item.url}`}>
                             <ExternalLink className="mr-2 h-4 w-4" />
