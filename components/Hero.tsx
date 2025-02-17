@@ -3,7 +3,7 @@ import { FlickeringGrid } from "./ui/magicui/flickering-grid";
 
 export function Hero() {
   return (
-    <section className="relative flex items-center justify-center">
+    <section className="relative overflow-hidden h-screen flex items-center justify-center">
       {/* Background with Flickering Grid */}
       <div className="absolute w-full inset-0 -z-10 overflow-hidden rounded-lg">
         <FlickeringGrid
@@ -18,18 +18,18 @@ export function Hero() {
         />
       </div>
 
-      <div className="relative items-center w-full pt-12 lg:pt-12">
+      <div className="relative -mt-4 justify-center flex flex-col items-center w-full">
         <div className="text-center">
-          <span className="text-sm text-primary font-medium tracking-tight bg-primary/10 px-4 py-2 rounded-full">
+          <span className="text-sm select-none text-primary font-medium tracking-tight bg-primary/10 px-4 py-2 rounded-full">
             Introducing Schedulify
           </span>
 
-          <h1 className="mt-8 text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-medium leading-none">
+          <h1 className="mt-8 select-none text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-medium leading-none">
             Scheduling made{" "}
             <span className="block text-primary">super easy!</span>
           </h1>
 
-          <p className="max-w-xl mx-auto mt-4 lg:text-lg text-muted-foreground">
+          <p className="max-w-xl select-none mx-auto mt-4 lg:text-lg text-muted-foreground">
             Scheduling a meeting can be a pain. But we at Schedulify make it
             easy for your clients to schedule meetings with you.
           </p>
@@ -39,7 +39,7 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="relative items-center w-full mx-auto rounded-2xl md:rounded-full -z-20 -mt-12 lg:-mt-20">
+        <div className="relative items-center w-full mx-auto rounded-2xl -mt-16 md:rounded-full -z-20">
           <svg
             className="relative inset-0 blur-3xl"
             style={{ zIndex: -1 }}

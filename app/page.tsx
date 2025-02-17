@@ -10,8 +10,7 @@ async function page() {
   }
   return (
     <div className="">
-     
-      <Navbar />
+     <Navbar />
       <Hero/>
     </div>
   );
