@@ -63,7 +63,7 @@ export default function CardWithForm() {
           <CardContent>
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
-                <Label> Full Name</Label>
+                <Label>Full Name</Label>
                 <Input
                   name={fields.name.name}
                   defaultValue={initialName}

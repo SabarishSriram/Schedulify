@@ -36,70 +36,65 @@ export async function submitForm(prevstate: any, formData: FormData) {
   if (!isUnique) {
     return { error: ["Username is already taken"] };
   }
-  const no=await prisma.availability.findMany({
-    where:{userId: session.user?.id}
-  })
-  console.log(no,"hi this is the problem")
-  if(no.length>0){
-    return redirect("/onboarding/grant-id")
-  }
-  else{
-    const res = await prisma.availability.createMany({
-      data: [
-        {
-          day: "Monday",
-          fromtime: "08:00",
-          totime: "18:00",
-          isactive: true,
-          userId:session.user?.id
-        },
-        {
-          day: "Tuesday",
-          fromtime: "08:00",
-          totime: "18:00",
-          isactive: true,
-          userId:session.user?.id
-  
-        },
-        {
-          day: "Wednesday",
-          fromtime: "08:00",
-          totime: "18:00",
-          isactive: true,
-          userId:session.user?.id
-        },
-        {
-          day: "Thursday",
-          fromtime: "08:00",
-          totime: "18:00",
-          isactive: true,
-          userId:session.user?.id
-        },
-        {
-          day: "Friday",
-          fromtime: "08:00",
-          totime: "18:00",
-          isactive: true,
-          userId:session.user?.id
-        },
-        {
-          day: "Saturday",
-          fromtime: "08:00",
-          totime: "18:00",
-          isactive: true,
-          userId:session.user?.id
-        },
-        {
-          day: "Sunday",
-          fromtime: "08:00",
-          totime: "18:00",
-          isactive: true,
-          userId:session.user?.id
-        },
-      ],
-    });
+  const no = await prisma.user.update({
+    where: { id: session.user?.id },
+    data: { userName: userName },
+  });
+  console.log(no);
+  const res = await prisma.availability.createMany({
+    data: [
+      {
+        day: "Monday",
+        fromtime: "08:00",
+        totime: "18:00",
+        isactive: true,
+        userId: session.user?.id,
+      },
+      {
+        day: "Tuesday",
+        fromtime: "08:00",
+        totime: "18:00",
+        isactive: true,
+        userId: session.user?.id,
+      },
+      {
+        day: "Wednesday",
+        fromtime: "08:00",
+        totime: "18:00",
+        isactive: true,
+        userId: session.user?.id,
+      },
+      {
+        day: "Thursday",
+        fromtime: "08:00",
+        totime: "18:00",
+        isactive: true,
+        userId: session.user?.id,
+      },
+      {
+        day: "Friday",
+        fromtime: "08:00",
+        totime: "18:00",
+        isactive: true,
+        userId: session.user?.id,
+      },
+      {
+        day: "Saturday",
+        fromtime: "08:00",
+        totime: "18:00",
+        isactive: true,
+        userId: session.user?.id,
+      },
+      {
+        day: "Sunday",
+        fromtime: "08:00",
+        totime: "18:00",
+        isactive: true,
+        userId: session.user?.id,
+      },
+    ],
+  });
 
-  }
   return redirect("/onboarding/grant-id");
 }
 
@@ -140,7 +135,7 @@ export async function updateAvailabiltyAction(formdata: FormData) {
     await prisma.$transaction(
       availabilityData.map((item) =>
         prisma.availability.update({
-          where: { id: item.id , userId: session.user?.id},
+          where: { id: item.id, userId: session.user?.id },
           data: {
             isactive: item.isActive,
             fromtime: item.fromTime,
@@ -256,7 +251,7 @@ export async function createMeeting(formData: FormData) {
   // Calculate the end time by adding the meeting length (in minutes) to the start time
   const endDateTime = new Date(startDateTime.getTime() + meetingLength * 60000);
 
-  const res=await nylas.events.create({
+  const res = await nylas.events.create({
     identifier: getUserData?.grantId as string,
     requestBody: {
       title: eventTypeData?.title,
@@ -277,7 +272,7 @@ export async function createMeeting(formData: FormData) {
         },
       ],
       metadata: {
-        createdBy: "Schedulify",  
+        createdBy: "Schedulify",
       },
     },
     queryParams: {
@@ -285,7 +280,7 @@ export async function createMeeting(formData: FormData) {
       notifyParticipants: true,
     },
   });
-  console.log("Meeting: ",res)
+  console.log("Meeting: ", res);
 
   return redirect(`/success`);
 }

@@ -30,6 +30,7 @@ export async function GET(req: NextRequest) {
     });
 
     console.log({ grantId });
+    return redirect("/dashboard")
   } catch (error) {
     console.error("something went wrong",error);
   }
