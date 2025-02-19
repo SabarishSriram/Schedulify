@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Schedulify
 
-## Getting Started
+Schedulify is a calendar scheduling application that allows users to book appointments with dynamic availability. It integrates Google Maps and Google Calendar to streamline scheduling and appointment management.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Dynamic Availability**: Users can set and manage their availability dynamically.
+- **Google Calendar Integration**: Sync appointments directly with Google Calendar.
+- **Google Maps Integration**: Location-based scheduling using Google Maps.
+- **Appointment Management**: View, edit, and cancel booked appointments.
+
+## Screenshots
+
+### Home Page
+![image](https://github.com/user-attachments/assets/067f149c-efa0-47f8-a3f7-929dfef26cd3)
+
+### Booking Form
+![image](https://github.com/user-attachments/assets/e9b6cb94-2958-4d4c-83dd-6d45ca506bba)
+
+### Availability Route
+![image](https://github.com/user-attachments/assets/3536879a-0dde-4d19-a61b-e6961bf78902)
+
+### Scheduling Form
+![image](https://github.com/user-attachments/assets/977024cb-c3bb-42f6-979d-e81f4b59609e)
+
+
+
+
+
+## Tech Stack
+
+- **Next.js**
+- **TypeScript**
+- **Prisma**
+- **PostgreSQL**
+- **shadcn/ui**
+- **Nylas**
+- **Auth.js**
+
+## Self-Hosting Guide
+
+### Deploy with Vercel
+
+Click the button below to deploy instantly:
+
+[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/SabarishSriram/Schedulify)
+
+### Alternatively:
+
+#### 1. Fork the repository:
+
+```sh
+https://github.com/SabarishSriram/Schedulify.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### 2. Install dependencies:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+#### 3. Set up environment variables
 
-## Learn More
+Create a `.env` file and add the necessary variables (refer to `.env.example`):
 
-To learn more about Next.js, take a look at the following resources:
+```sh
+AUTH_SECRET=
+AUTH_GITHUB_ID=
+AUTH_GITHUB_SECRET=
+AUTH_GOOGLE_ID=
+AUTH_GOOGLE_SECRET=
+DATABASE_URL=
+NYLAS_API_KEY=
+NYLAS_API_URL=
+NYLAS_CLIENT_ID=
+NYLAS_REDIRECT_URI=
+NEXT_URL=
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+#### 4. Run the development server:
 
-## Deploy on Vercel
+```sh
+npm run dev
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+#### 5. Set up Prisma:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```sh
+npx prisma generate
+npx prisma db push
+```
+
+---
+
